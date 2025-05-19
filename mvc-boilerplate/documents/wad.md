@@ -1,18 +1,21 @@
-Web Application Document - Projeto Individual - Módulo 2 - Inteli
-Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final.
+# Web Application Document - Projeto Individual - Módulo 2 - Inteli
 
-Nome do Projeto
-Autor do projeto
-Sumário
-Introdução
-Visão Geral da Aplicação Web
-Projeto Técnico da Aplicação Web
-Desenvolvimento da Aplicação Web
-Referências
+**Nome do Projeto:** TaskManager  
+**Autor do projeto:** Enzo Matsui
 
-# 1. Introdução
+## Sumário
 
-O **TaskManager** é uma aplicação web para gerenciamento de tarefas, desenvolvida utilizando **Node.js** com **Express.js** e **PostgreSQL**, seguindo o padrão arquitetural **MVC** (Model-View-Controller). O objetivo do sistema é permitir que usuários organizem e acompanhem tarefas de forma eficiente, promovendo organização pessoal e produtividade. Os usuários podem criar tarefas, classificá-las por categorias, atribuir prioridades, acompanhar seu status e adicionar comentários, sendo ideal para projetos acadêmicos e pessoais.
+1. [Introdução](#introdução)
+2. [Visão Geral da Aplicação Web](#visão-geral-da-aplicação-web)
+3. [Projeto Técnico da Aplicação Web](#projeto-técnico-da-aplicação-web)
+4. [Desenvolvimento da Aplicação Web](#desenvolvimento-da-aplicação-web)
+5. [Referências](#referências)
+
+# Introdução
+
+O **TaskManager** é uma aplicação web para gerenciamento de tarefas, desenvolvida utilizando **Node.js** com **Express.js** e **PostgreSQL**, seguindo o padrão arquitetural **MVC** (Model-View-Controller).
+
+O objetivo do sistema é permitir que usuários organizem e acompanhem tarefas de forma eficiente, promovendo organização pessoal e produtividade. Os usuários podem criar tarefas, classificá-las por categorias, atribuir prioridades, acompanhar seu status e adicionar comentários, sendo ideal para projetos acadêmicos e pessoais.
 
 A proposta surgiu da motivação pessoal de coletar citações que despertam reflexões, inspiram ações ou simplesmente merecem ser guardadas. O sistema funciona como um acervo pessoal de frases, em que cada usuário pode cadastrar pensamentos, atribuí-los a autores e classificá-los por temas específicos.
 
@@ -20,14 +23,14 @@ A aplicação será desenvolvida com Node.js e Express.js, utilizando a arquitet
 
 O objetivo é criar uma plataforma funcional para armazenar e organizar frases, incentivando a curadoria de conteúdo textual. O projeto também consolida os conhecimentos adquiridos em desenvolvimento web, como modularização, rotas e interação com banco de dados.
 
-# 2. Visão Geral da Aplicação Web
+# Visão Geral da Aplicação Web
 2.1. Personas (Semana 01 - opcional)
 Posicione aqui sua(s) Persona(s) em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.
 
 2.2. User Stories (Semana 01 - opcional)
 Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a referência USXX para numeração (US01, US02, US03, ...). Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST de 1 User Storie prioritária.
 
-# 3. Projeto da Aplicação Web
+# Projeto da Aplicação Web
 
 A aplicação foi estruturada para facilitar o gerenciamento de tarefas por meio de uma interface intuitiva e recursos completos. O sistema permite o cadastro de usuários, criação e acompanhamento de tarefas, classificação por categorias, definição de prioridades e status, além de um sistema de comentários para comunicação entre usuários. O backend foi implementado em Node.js com Express.js, utilizando PostgreSQL como banco de dados relacional, e segue o padrão MVC para separar responsabilidades entre modelos, controladores e rotas.
 
