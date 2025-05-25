@@ -1,26 +1,27 @@
 const express = require('express');
-const app = express();
-const path = require('path');
-const alunosRoutes = require('./routes/alunos');
 const bodyParser = require('body-parser');
-require('dotenv').config();
+const cors = require('cors');
+const routes = require('./routes');
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(cors());
+app.use(bodyParser.json());
 
-app.use('/alunos', alunosRoutes);
+// Log de todas as requisições para depuração
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
 
+// Rota principal deve vir antes das rotas /api
 app.get('/', (req, res) => {
-  res.redirect('/alunos');
+  res.send('API de Tarefas está rodando!');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+app.use('/api', routes);
 
-const cursosRoutes = require('./routes/cursos');
-app.use('/cursos', cursosRoutes);
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
+});

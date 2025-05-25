@@ -1,0 +1,24 @@
+{
+  "name": "tarefas",
+  "version": "1.0.0",
+  "main": "mvc-boilerplate/src/server.js",
+  "scripts": {
+    "start": "node ./mvc-boilerplate/src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matsu-iy/Tarefas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Matsu-iy/Tarefas/issues"
+  },
+  "homepage": "https://github.com/Matsu-iy/Tarefas#readme",
+  "description": ""
+}
