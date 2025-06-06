@@ -1,36 +1,36 @@
-const pool = require('../config/database')
+const pool = require('../config/database');
 
-// Criar uma nova tarefa
+// Listar tarefas
+exports.listarTarefas = async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM tarefas ORDER BY id DESC');
+    res.render('tarefas', { tarefas: result.rows });
+  } catch (err) {
+    res.status(500).send('Erro ao buscar tarefas: ' + err.message);
+  }
+};
+
+// Criar tarefa
 exports.criarTarefa = async (req, res) => {
   const { nome, descricao } = req.body;
-
-  const query = 'INSERT INTO tarefas (nome, descricao) VALUES ($1, $2) RETURNING *';
-  const values = [nome, descricao];
-
   try {
-    const result = await pool.query(query, values);
-    const tarefa = result.rows[0];
-    res.status(201).json(tarefa);
+    await pool.query(
+      'INSERT INTO tarefas (nome, descricao) VALUES ($1, $2)',
+      [nome, descricao]
+    );
+    res.redirect('/tarefas');
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).send('Erro ao cadastrar tarefa: ' + err.message);
   }
 };
 
-// Listar todas as tarefas
-exports.listarTarefas = async (req, res) => {
-  const query = 'SELECT * FROM tarefas';
-
-  try {
-    const result = await pool.query(query);
-    res.status(200).json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Página de nova tarefa
+exports.novaTarefa = (req, res) => {
+  res.render('novaTarefa');
 };
 
-
+// Atualizar uma tarefa
 exports.editarTarefa = async (req, res) => {
-    // Atualizar uma tarefa
   const { id } = req.params;
   const { nome, descricao, status } = req.body;
 
@@ -49,7 +49,6 @@ exports.editarTarefa = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 // Excluir uma tarefa
 exports.excluirTarefa = async (req, res) => {

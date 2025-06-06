@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router();
 const autorRouter = require('./autor');
 const livroRouter = require('./livro');
-const vendaRouter = require('./venda');
 
 // API routes
 router.use('/autores', autorRouter);
 router.use('/livros', livroRouter);
-router.use('/vendas', vendaRouter);
 
 // Error handling middleware
 router.use((err, req, res, next) => {

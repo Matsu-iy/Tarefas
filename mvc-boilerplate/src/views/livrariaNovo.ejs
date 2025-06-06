@@ -9,49 +9,93 @@
 <body>
   <h1>Cadastrar Autor, Livro ou Venda</h1>
 
-  <h2>Novo Autor</h2>
-  <form method="POST" action="/livraria/novo/autor">
-    <label>Nome:</label><br>
-    <input type="text" name="nome" required><br>
-    <label>Nacionalidade:</label><br>
-    <input type="text" name="nacionalidade"><br>
-    <button type="submit">Cadastrar Autor</button>
-  </form>
+  <div class="feedback" id="feedback"></div>
 
-  <h2>Novo Livro</h2>
-  <form method="POST" action="/livraria/novo/livro">
-    <label>Título:</label><br>
-    <input type="text" name="titulo" required><br>
-    <label>Ano de Publicação:</label><br>
-    <input type="number" name="ano_publicacao"><br>
-    <label>Preço:</label><br>
-    <input type="number" step="0.01" name="preco"><br>
-    <label>Autor:</label><br>
-    <select name="id_autor">
-      <option value="">Selecione</option>
-      <% autores.forEach(autor => { %>
-        <option value="<%= autor.id %>"><%= autor.nome %></option>
-      <% }) %>
-    </select><br>
-    <button type="submit">Cadastrar Livro</button>
-  </form>
+  <div class="form-grid">
+    <h2>Novo Autor</h2>
+    <form id="autorForm" method="POST" action="/livraria/novo/autor">
+      <label>Nome:</label><br>
+      <input type="text" name="nome" required><br>
+      <label>Nacionalidade:</label><br>
+      <input type="text" name="nacionalidade"><br>
+      <button type="submit">Cadastrar Autor</button>
+    </form>
 
-  <h2>Nova Venda</h2>
-  <form method="POST" action="/livraria/novo/venda">
-    <label>Livro:</label><br>
-    <select name="id_livro">
-      <option value="">Selecione</option>
-      <% livros.forEach(livro => { %>
-        <option value="<%= livro.id %>"><%= livro.titulo %></option>
-      <% }) %>
-    </select><br>
-    <label>Data da Venda:</label><br>
-    <input type="date" name="data_venda"><br>
-    <label>Quantidade:</label><br>
-    <input type="number" name="quantidade"><br>
-    <button type="submit">Cadastrar Venda</button>
-  </form>
+    <h2>Novo Livro</h2>
+    <form id="livroForm" method="POST" action="/livraria/novo/livro">
+      <label>Título:</label><br>
+      <input type="text" name="titulo" required><br>
+      <label>Ano de Publicação:</label><br>
+      <input type="number" name="ano_publicacao"><br>
+      <label>Preço:</label><br>
+      <input type="number" step="0.01" name="preco"><br>
+      <label>Autor:</label><br>
+      <select name="id_autor">
+        <option value="">Selecione</option>
+        <% autores.forEach(autor => { %>
+          <option value="<%= autor.id %>"><%= autor.nome %></option>
+        <% }) %>
+      </select><br>
+      <button type="submit">Cadastrar Livro</button>
+    </form>
+
+    <h2>Nova Venda</h2>
+    <form id="vendaForm" method="POST" action="/livraria/novo/venda">
+      <label>Livro:</label><br>
+      <select name="id_livro">
+        <option value="">Selecione</option>
+        <% livros.forEach(livro => { %>
+          <option value="<%= livro.id %>"><%= livro.titulo %></option>
+        <% }) %>
+      </select><br>
+      <label>Data da Venda:</label><br>
+      <input type="date" name="data_venda"><br>
+      <label>Quantidade:</label><br>
+      <input type="number" name="quantidade"><br>
+      <button type="submit">Cadastrar Venda</button>
+    </form>
+  </div>
 
   <a href="/livraria">Voltar para a listagem</a>
+
+  <script>
+    function showFeedback(message, type) {
+      const feedback = document.getElementById('feedback');
+      feedback.textContent = message;
+      feedback.className = `feedback ${type}`;
+      feedback.style.display = 'block';
+      setTimeout(() => feedback.style.display = 'none', 3000);
+    }
+
+    async function handleSubmit(e, endpoint) {
+      e.preventDefault();
+      const form = e.target;
+      form.classList.add('loading');
+      
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form))
+        });
+        
+        if (response.ok) {
+          showFeedback('Cadastro realizado com sucesso!', 'success');
+          setTimeout(() => window.location.href = '/livraria', 1500);
+        } else {
+          showFeedback('Erro ao cadastrar', 'error');
+        }
+      } catch (error) {
+        showFeedback('Erro ao cadastrar', 'error');
+      } finally {
+        form.classList.remove('loading');
+      }
+    }
+
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', e => 
+        handleSubmit(e, form.action));
+    });
+  </script>
 </body>
 </html>

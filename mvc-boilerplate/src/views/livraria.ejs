@@ -7,83 +7,90 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <h1>Livraria - Informações</h1>
-  <a href="/livraria/novo">Cadastrar novo autor, livro ou venda</a>
+  <div class="container">
+    <h1>Livraria - Informações</h1>
+    <a href="/livraria/novo" class="button">Cadastrar novo autor, livro ou venda</a>
 
-  <h2>Autores</h2>
-  <table border="1" cellpadding="8" cellspacing="0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Nacionalidade</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (autores.length === 0) { %>
-        <tr><td colspan="3">Nenhum autor cadastrado.</td></tr>
-      <% } %>
-      <% autores.forEach(autor => { %>
+    <h2>Autores</h2>
+    <table id="autores-table" border="1" cellpadding="8" cellspacing="0">
+      <thead>
         <tr>
-          <td><%= autor.id %></td>
-          <td><%= autor.nome %></td>
-          <td><%= autor.nacionalidade %></td>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Nacionalidade</th>
         </tr>
-      <% }) %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% if (autores.length === 0) { %>
+          <tr><td colspan="3">Nenhum autor cadastrado.</td></tr>
+        <% } %>
+        <% autores.forEach(autor => { %>
+          <tr>
+            <td><%= autor.id %></td>
+            <td><%= autor.nome %></td>
+            <td><%= autor.nacionalidade %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
 
-  <h2>Livros</h2>
-  <table border="1" cellpadding="8" cellspacing="0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Ano</th>
-        <th>Preço</th>
-        <th>Autor</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (livros.length === 0) { %>
-        <tr><td colspan="5">Nenhum livro cadastrado.</td></tr>
-      <% } %>
-      <% livros.forEach(livro => { %>
+    <h2>Livros</h2>
+    <table id="livros-table" border="1" cellpadding="8" cellspacing="0">
+      <thead>
         <tr>
-          <td><%= livro.id %></td>
-          <td><%= livro.titulo %></td>
-          <td><%= livro.ano_publicacao %></td>
-          <td><%= livro.preco %></td>
-          <td><%= livro.autor_nome || '-' %></td>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Ano</th>
+          <th>Preço</th>
+          <th>Autor</th>
         </tr>
-      <% }) %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% if (livros.length === 0) { %>
+          <tr><td colspan="5">Nenhum livro cadastrado.</td></tr>
+        <% } %>
+        <% livros.forEach(livro => { %>
+          <tr>
+            <td><%= livro.id %></td>
+            <td><%= livro.titulo %></td>
+            <td><%= livro.ano_publicacao %></td>
+            <td><%= livro.preco %></td>
+            <td><%= livro.autor_nome || '-' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
 
-  <h2>Vendas</h2>
-  <table border="1" cellpadding="8" cellspacing="0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Livro</th>
-        <th>Data da Venda</th>
-        <th>Quantidade</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (vendas.length === 0) { %>
-        <tr><td colspan="4">Nenhuma venda registrada.</td></tr>
-      <% } %>
-      <% vendas.forEach(venda => { %>
+    <h2>Vendas</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
         <tr>
-          <td><%= venda.id %></td>
-          <td><%= venda.livro_titulo || '-' %></td>
-          <td><%= venda.data_venda ? venda.data_venda.toISOString().slice(0,10) : '-' %></td>
-          <td><%= venda.quantidade %></td>
+          <th>ID</th>
+          <th>Livro</th>
+          <th>Data da Venda</th>
+          <th>Quantidade</th>
         </tr>
-      <% }) %>
-    </tbody>
-  </table>
-  <a href="/">Voltar</a>
+      </thead>
+      <tbody>
+        <% if (typeof vendas === 'undefined' || !vendas || vendas.length === 0) { %>
+          <tr><td colspan="4">Nenhuma venda registrada.</td></tr>
+        <% } else { %>
+          <% vendas.forEach(venda => { %>
+            <tr>
+              <td><%= venda.id %></td>
+              <td><%= venda.livro_titulo || '-' %></td>
+              <td><%= venda.data_venda ? new Date(venda.data_venda).toLocaleDateString() : '-' %></td>
+              <td><%= venda.quantidade || 0 %></td>
+            </tr>
+          <% }) %>
+        <% } %>
+      </tbody>
+    </table>
+    <!-- Debug info -->
+    <% if (typeof vendas !== 'undefined') { %>
+      <p style="display:none">Debug: <%= JSON.stringify(vendas) %></p>
+    <% } %>
+  </div>
+  <script src="/js/livraria.js"></script>
 </body>
 </html>
