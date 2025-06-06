@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Livros</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Livros</h1>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Ano Publicação</th>
+        <th>Preço</th>
+        <th>Autor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (livros.length === 0) { %>
+        <tr><td colspan="5">Nenhum livro cadastrado.</td></tr>
+      <% } %>
+      <% livros.forEach(livro => { %>
+        <tr>
+          <td><%= livro.id %></td>
+          <td><%= livro.titulo %></td>
+          <td><%= livro.ano_publicacao %></td>
+          <td>R$ <%= livro.preco %></td>
+          <td><%= livro.autor_nome || '-' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <a href="/">Voltar</a>
+</body>
+</html>

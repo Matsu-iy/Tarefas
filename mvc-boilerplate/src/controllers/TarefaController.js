@@ -1,5 +1,4 @@
-// controllers/TarefaController.js
-const pool = require('../config/database');
+const pool = require('../config/database')
 
 // Criar uma nova tarefa
 exports.criarTarefa = async (req, res) => {

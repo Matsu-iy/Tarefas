@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Autores</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Autores</h1>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Nacionalidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (autores.length === 0) { %>
+        <tr><td colspan="3">Nenhum autor cadastrado.</td></tr>
+      <% } %>
+      <% autores.forEach(autor => { %>
+        <tr>
+          <td><%= autor.id %></td>
+          <td><%= autor.nome %></td>
+          <td><%= autor.nacionalidade %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <a href="/">Voltar</a>
+</body>
+</html>

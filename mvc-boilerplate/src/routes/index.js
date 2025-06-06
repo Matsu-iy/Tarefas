@@ -1,15 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const TarefaController = require('../controllers/TarefaController');
+const autorRouter = require('./autor');
+const livroRouter = require('./livro');
+const vendaRouter = require('./venda');
 
-router.post('/tarefas', TarefaController.criarTarefa);
-router.get('/tarefas', TarefaController.listarTarefas);
-router.put('/tarefas/:id', TarefaController.editarTarefa);
-router.delete('/tarefas/:id', TarefaController.excluirTarefa);
+// API routes
+router.use('/autores', autorRouter);
+router.use('/livros', livroRouter);
+router.use('/vendas', vendaRouter);
 
-// Exemplo de rota raiz
-router.get('/', (req, res) => {
-  res.send('API funcionando');
+// Error handling middleware
+router.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    error: 'Internal Server Error',
+    message: err.message
+  });
+});
+
+// 404 handling for API routes
+router.use((req, res) => {
+  res.status(404).json({
+    error: 'Not Found',
+    message: 'The requested resource was not found'
+  });
 });
 
 module.exports = router;
