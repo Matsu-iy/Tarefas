@@ -111,6 +111,112 @@ function atualizarTabelas(autores, livros) {
     `).join('');
 }
 
+async function editarLivro(id) {
+    try {
+        const livro = await fetch(`/api/livros/${id}`).then(res => res.json());
+        
+        const modalHtml = `
+            <div class="modal">
+                <div class="modal-content">
+                    <h3>Editar Livro</h3>
+                    <form id="editForm">
+                        <div class="form-group">
+                            <label>Título:</label>
+                            <input type="text" name="titulo" value="${livro.titulo}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ano:</label>
+                            <input type="number" name="ano_publicacao" value="${livro.ano_publicacao}">
+                        </div>
+                        <div class="form-group">
+                            <label>Preço:</label>
+                            <input type="number" step="0.01" name="preco" value="${livro.preco}">
+                        </div>
+                        <div class="form-group">
+                            <label>Autor:</label>
+                            <select name="id_autor" id="autorSelect">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit">Salvar</button>
+                            <button type="button" onclick="fecharModal()" class="btn-cancel">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>`;
+
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        // Carregar autores no select
+        const autores = await fetch('/api/autores').then(res => res.json());
+        const select = document.getElementById('autorSelect');
+        autores.forEach(autor => {
+            const option = new Option(autor.nome, autor.id, false, autor.id === livro.id_autor);
+            select.add(option);
+        });
+
+        // Configurar submit do formulário
+        document.getElementById('editForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch(`/api/livros/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+
+                if (response.ok) {
+                    showFeedback('Livro atualizado com sucesso', 'success');
+                    fecharModal();
+                    carregarDados();
+                } else {
+                    throw new Error('Erro ao atualizar');
+                }
+            } catch (error) {
+                showFeedback('Erro ao atualizar livro', 'error');
+            }
+        };
+    } catch (error) {
+        showFeedback('Erro ao carregar dados do livro', 'error');
+    }
+}
+
+function fecharModal() {
+    const modal = document.querySelector('.modal');
+    if (modal) modal.remove();
+}
+
+async function deletarLivro(id) {
+    if (!confirm('Tem certeza que deseja excluir este livro?')) return;
+    
+    try {
+        const response = await fetch(`/api/livros/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            showFeedback('Livro excluído com sucesso', 'success');
+            carregarDados();
+        } else {
+            throw new Error('Erro ao excluir');
+        }
+    } catch (error) {
+        showFeedback('Erro ao excluir livro', 'error');
+    }
+}
+
+async function getAutoresOptions(selectedId) {
+    const autores = await fetch('/api/autores').then(res => res.json());
+    return autores.map(autor => 
+        `<option value="${autor.id}" ${autor.id === selectedId ? 'selected' : ''}>
+            ${autor.nome}
+        </option>`
+    ).join('');
+}
+
 // Carregar dados ao iniciar a página
 document.addEventListener('DOMContentLoaded', () => {
     carregarDados();

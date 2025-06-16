@@ -25,7 +25,7 @@ app.get('/livraria/novo', LivrariaController.novoForm);
 // API routes
 app.use('/api', require('./routes'));
 
-// Cadastro de autor
+// Cadastro routes
 app.post('/livraria/novo/autor', async (req, res) => {
   const { nome, nacionalidade } = req.body;
   try {
@@ -39,7 +39,6 @@ app.post('/livraria/novo/autor', async (req, res) => {
   }
 });
 
-// Cadastro de livro
 app.post('/livraria/novo/livro', async (req, res) => {
   const { titulo, ano_publicacao, preco, id_autor } = req.body;
   try {
@@ -53,7 +52,6 @@ app.post('/livraria/novo/livro', async (req, res) => {
   }
 });
 
-// Cadastro de venda
 app.post('/livraria/novo/venda', async (req, res) => {
   const { id_livro, data_venda, quantidade } = req.body;
   try {
@@ -67,6 +65,15 @@ app.post('/livraria/novo/venda', async (req, res) => {
   }
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('error', {
+    message: 'Algo deu errado!',
+    error: process.env.NODE_ENV === 'development' ? err : {}
+  });
+});
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
   console.log('\nLinks disponíveis:');
@@ -75,8 +82,6 @@ app.listen(port, () => {
   console.log('http://localhost:3000/');
   console.log('\nPáginas de listagem:');
   console.log('http://localhost:3000/livraria');
-  console.log('http://localhost:3000/livros');
-  console.log('http://localhost:3000/autores');
   console.log('\nPáginas de cadastro:');
   console.log('http://localhost:3000/livraria/novo');
   console.log('\nAPI endpoints:');

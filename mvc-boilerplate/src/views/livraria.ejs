@@ -43,6 +43,7 @@
           <th>Ano</th>
           <th>Preço</th>
           <th>Autor</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -56,6 +57,10 @@
             <td><%= livro.ano_publicacao %></td>
             <td><%= livro.preco %></td>
             <td><%= livro.autor_nome || '-' %></td>
+            <td class="actions">
+              <button onclick="editarLivro('<%= livro.id %>')" class="btn-edit">✏️ Editar</button>
+              <button onclick="deletarLivro('<%= livro.id %>')" class="btn-delete">🗑️ Excluir</button>
+            </td>
           </tr>
         <% }) %>
       </tbody>

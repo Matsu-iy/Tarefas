@@ -5,12 +5,14 @@ exports.index = async (req, res) => {
     try {
         const autores = await Autor.findAll();
         const livros = await Livro.findAll();
-        // Initialize empty vendas array
-        const vendas = [];
+        const vendas = []; // Temporário até implementar modelo de Vendas
         res.render('livraria', { autores, livros, vendas });
     } catch (err) {
-        console.error('Erro:', err);
-        res.status(500).send('Erro ao buscar dados');
+        console.error('Erro ao carregar dashboard:', err);
+        res.status(500).render('error', { 
+            message: 'Erro ao carregar dados',
+            error: process.env.NODE_ENV === 'development' ? err : {}
+        });
     }
 };
 

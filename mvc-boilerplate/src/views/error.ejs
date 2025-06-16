@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Erro</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Erro no Servidor</h1>
+        <div class="alert alert-error">
+            <p><%= message %></p>
+            <% if (error.stack && process.env.NODE_ENV === 'development') { %>
+                <pre><%= error.stack %></pre>
+            <% } %>
+        </div>
+        <a href="/livraria" class="button">Voltar</a>
+    </div>
+</body>
+</html>
